@@ -1,0 +1,39 @@
+schemaName: dev
+
+server.servlet.context-path: /demo
+
+spring:
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default  # eager to prevent SB deadlock
+
+  datasource:
+    host: localhost
+    port: 3306
+    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${schemaName}?characterEncoding=utf8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: password
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+
+    properties:
+      hibernate:
+        search:
+          backend:
+            hosts: localhost:9200
+            index_schema_management_strategy: drop-and-create
+
+            indexing:
+              dynamic_mapping: true
+
+            schema_management:
+              minimal_required_status: yellow
+
+            log:
+              json_pretty_printing: true
